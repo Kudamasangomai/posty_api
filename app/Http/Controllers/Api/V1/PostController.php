@@ -31,7 +31,10 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $validated ['user_id'] = 1;
+        $post = Post::create($validated);
+        return new PostResource($post);
     }
 
     /**
@@ -55,7 +58,9 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        $validated = $request->validated();
+        $post->update($validated);
+        return new PostResource($post);
     }
 
     /**
@@ -63,6 +68,12 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+       $post->delete();
+       return new PostCollection(Post::paginate(15));
+    }
+
+    public function search()
+    {
+        
     }
 }

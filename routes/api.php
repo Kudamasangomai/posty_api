@@ -25,4 +25,7 @@ Route::group(['prefix'=>'v1'], function(){
 
 Route::apiResource('posts',PostController::class);
 Route::apiResource('users',UserController::class);
+Route::get('/posts/search/{name}',[PostController::class,'search']);
+
 });
+
