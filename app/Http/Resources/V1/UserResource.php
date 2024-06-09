@@ -19,9 +19,9 @@ class UserResource extends JsonResource
             'id'=> $this->id,
             'name' => $this->name,
             'email'=> $this->email,
-            'posts' => $this->whenLoaded('posts', function () {
-                return PostResource::collection($this->posts); // Include related posts
-            }),
+            'total_posts'=> $this->whenCounted('posts'),
+            'posts'=> PostResource::collection($this->whenLoaded('posts')),
+           
         ];
     }
 }

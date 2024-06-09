@@ -18,8 +18,8 @@ class PostResource extends JsonResource
             'post_id'=> $this->id,
             'post'=>substr($this->post, 0, 50) . '...',
             'created' => $this->created_at->diffForHumans(),
-            'createdBy'=>new UserResource($this->user),
-            // 'created_by'=> $this->user_id,
+            'user'=>new UserResource($this->whenLoaded('user')),
+        
            
             
         ];

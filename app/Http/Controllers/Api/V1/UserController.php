@@ -14,7 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-      return new UserCollection(User::with('posts')->get());
+
+      return new UserCollection(User::withcount('posts')->paginate(5));
     }
 
     /**
@@ -38,6 +39,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        $user = User::withcount('posts')->with('posts')->find($user->id);
         return new UserResource($user);
     }
 
