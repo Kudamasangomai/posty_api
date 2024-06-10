@@ -1,10 +1,12 @@
 <?php
 
+use Illuminate\Http\Request;
+use PHPUnit\Metadata\PostCondition;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Api\V1\PostController;
 use App\Http\Controllers\Api\V1\UserController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use PHPUnit\Metadata\PostCondition;
+use App\Http\Controllers\Authcontroller as ControllersAuthcontroller;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +22,10 @@ use PHPUnit\Metadata\PostCondition;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('login',[AuthController::class,'login'])->name('login');
+
+
 
 Route::group(['prefix'=>'v1'], function(){
 

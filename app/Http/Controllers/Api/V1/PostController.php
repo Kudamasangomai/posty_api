@@ -8,6 +8,8 @@ use App\Http\Requests\UpdatePostRequest;
 use App\Http\Controllers\Controller;
 use App\http\Resources\V1\PostResource;
 use App\http\Resources\V1\PostCollection;
+use Illuminate\Http\Response;
+
 class PostController extends Controller
 {
     /**
@@ -69,7 +71,11 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
        $post->delete();
-       return new PostCollection(Post::paginate(15));
+        return response()->json([
+            'message' =>'Post Succesfully Deleted',
+            'status' => Response::HTTP_OK,
+        ]);
+       
     }
 
     public function search()
