@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,42 +12,32 @@ use function Laravel\Prompts\password;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $validated = $request->validate([
-            'email'=>'required|email',
-            'password' => 'required'
-        ]);
-        
-        if(!Auth::attempt($validated)){
+        $userdata= $request->validated();        
+        if(!Auth::attempt($userdata)){
             return response()->json([
                 'message' => 'No User Found'
             ],401);
         }
 
-        $user = User::where('email',$validated['email'])->first();
+        $user = User::where('email',$userdata['email'])->first();
         return response()->json([
+            'user' => $user->name,
+            'message' => 'Successfully Logged In',
             'token' => $user->createToken('auth_token')->plainTextToken,
-            'token_type'=>'Bearer Token'
+            'token_type'=>'Bearer Token',
+          
         ]);
   
     }
 
 
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-        $data = $request->validate([
-            'name'=> 'required',
-            'email'=> 'required|email',
-            'password'=> 'required'
-        ]);
-
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password'])
-        ]);
-
+        $data = $request->validated();
+        $data['password'] = bcrypt($data['password']);
+        $user = User::create($data);
         $token = $user->createToken('myapptoken')->plainTextToken;
 
         $response = [
