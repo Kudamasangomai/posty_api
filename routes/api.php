@@ -28,7 +28,7 @@ Route::group(['prefix'=>'v1', 'middleware'=>'auth:sanctum'], function(){
 
 Route::apiResource('posts',PostController::class);
 Route::apiResource('users',UserController::class);
-Route::get('/posts/search/{name}',[PostController::class,'search']);
+Route::get('/posts/search/{searchword}',[PostController::class,'search']);
 
 });
 

@@ -78,8 +78,8 @@ class PostController extends Controller
        
     }
 
-    public function search()
+    public function search($searchword)
     {
-        
+         return new PostCollection(Post::with('user')->where('post', 'like', '%'.$searchword.'%')->paginate(5));
     }
 }
