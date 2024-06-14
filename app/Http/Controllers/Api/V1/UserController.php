@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Spatie\QueryBuilder\QueryBuilder;
 use App\Http\Resources\V1\UserResource;
 use App\http\Resources\V1\UserCollection;
+
 class UserController extends Controller
 {
     /**
@@ -14,8 +16,12 @@ class UserController extends Controller
      */
     public function index()
     {
-
-      return new UserCollection(User::withcount('posts')->paginate(5));
+        $users = QueryBuilder::for(User::class)
+            ->allowedSorts(['name','email','created_at'])
+            ->withCount('posts')
+            ->paginate(5);
+        return new UserCollection($users);
+        // return new UserCollection(User::withcount('posts')->paginate(5));
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
+use Spatie\QueryBuilder\QueryBuilder;
 use App\Http\Requests\StorePostRequest;
 use App\http\Resources\V1\PostResource;
 use App\Http\Requests\UpdatePostRequest;
@@ -13,13 +14,19 @@ use App\http\Resources\V1\PostCollection;
 
 class PostController extends Controller
 {
-    
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return new PostCollection(Post::with('user')->paginate(5));
+
+        $posts = QueryBuilder::for(Post::class)
+            ->allowedSorts(['created_at'])
+            ->allowedFilters('user_id')
+            ->allowedIncludes('user')
+            ->paginate(5);
+        return new PostCollection($posts);
     }
 
     /**
@@ -36,9 +43,16 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
         $validated = $request->validated();
-        $validated ['user_id'] = auth()->id();
+        $validated['user_id'] = auth()->id();
         $post = Post::create($validated);
-        return new PostResource($post);
+
+        if($post){
+            return response()->json([
+               'data'=> new PostResource($post),
+                'message' => 'Post Succesfully Created',
+            ],Response::HTTP_CREATED);
+        }
+
     }
 
     /**
@@ -46,6 +60,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        $post = Post::with('user')->find($post->id);
         return new PostResource($post);
     }
 
@@ -54,7 +69,6 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-      
     }
 
     /**
@@ -73,17 +87,16 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        
-      Gate::authorize('delete',$post);
-       $post->delete();
+
+        Gate::authorize('delete', $post);
+        $post->delete();
         return response()->json([
-            'message' =>'Post Succesfully Deleted',
+            'message' => 'Post Succesfully Deleted',
         ]);
-       
     }
 
     public function search($searchword)
     {
-         return new PostCollection(Post::with('user')->where('post', 'like', '%'.$searchword.'%')->paginate(5));
+        return new PostCollection(Post::with('user')->where('post', 'like', '%' . $searchword . '%')->paginate(5));
     }
 }
