@@ -14,22 +14,35 @@ class AuthController extends Controller
 {
     public function login(LoginRequest $request)
     {
-        $userdata= $request->validated();        
-        if(!Auth::attempt($userdata)){
+        $userdata = $request->validated();
+        if (!Auth::attempt($userdata)) {
             return response()->json([
                 'message' => 'No User Found'
-            ],401);
+            ], 401);
         }
 
-        $user = User::where('email',$userdata['email'])->first();
-        return response()->json([
-            'user' => $user->name,
-            'message' => 'Successfully Logged In',
-            'token' => $user->createToken('auth_token')->plainTextToken,
-            'token_type'=>'Bearer Token',
-          
-        ]);
-  
+        $user = User::where('email', $userdata['email'])->first();
+
+        // dd($user->tokens);
+        /**
+         *limit tokens per user  
+         */
+        if ($user->tokens->count() > 0) {
+            return response()->json([
+                'user' => $user->name,
+                'message' => 'Successfully Logged In',
+
+
+            ]);
+        } else {
+            return response()->json([
+                'user' => $user->name,
+                'message' => 'Successfully Logged In',
+                'token' => $user->createToken('auth_token')->plainTextToken,
+                'token_type' => 'Bearer Token',
+
+            ]);
+        };
     }
 
 
