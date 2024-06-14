@@ -3,15 +3,17 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Models\Post;
-use App\Http\Requests\StorePostRequest;
-use App\Http\Requests\UpdatePostRequest;
-use App\Http\Controllers\Controller;
-use App\http\Resources\V1\PostResource;
-use App\http\Resources\V1\PostCollection;
 use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\StorePostRequest;
+use App\http\Resources\V1\PostResource;
+use App\Http\Requests\UpdatePostRequest;
+use App\http\Resources\V1\PostCollection;
 
 class PostController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      */
@@ -34,7 +36,7 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
         $validated = $request->validated();
-        $validated ['user_id'] = 1;
+        $validated ['user_id'] = auth()->id();
         $post = Post::create($validated);
         return new PostResource($post);
     }
@@ -52,7 +54,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+      
     }
 
     /**
@@ -60,6 +62,7 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
+        $this->authorize('update', $post);
         $validated = $request->validated();
         $post->update($validated);
         return new PostResource($post);
@@ -70,10 +73,11 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        
+      Gate::authorize('delete',$post);
        $post->delete();
         return response()->json([
             'message' =>'Post Succesfully Deleted',
-            'status' => Response::HTTP_OK,
         ]);
        
     }
