@@ -17,6 +17,7 @@ class PostResource extends JsonResource
         return [
             'post_id'=> $this->id,
             'post'=>substr($this->post, 0, 50) . '...',
+            'image' => $this->image,
             'created' => $this->created_at->diffForHumans(),
             'user'=>new UserResource($this->whenLoaded('user')),
         

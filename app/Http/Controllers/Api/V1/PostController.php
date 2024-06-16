@@ -44,6 +44,7 @@ class PostController extends Controller
     {
         $validated = $request->validated();
         $validated['user_id'] = auth()->id();
+        $validated['image'] = $request->file('image')->store('uploads','public');
         $post = Post::create($validated);
 
         if($post){
