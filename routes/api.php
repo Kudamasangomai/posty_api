@@ -36,3 +36,8 @@ Route::get('/posts/search/{searchword}',[PostController::class,'search']);
 
 });
 
+
+Route::fallback(function(){
+    return response()->json([
+        'message' => 'Route Not Found. If error persists, contact Kudam775@gmail.com'], 404);
+});

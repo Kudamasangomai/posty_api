@@ -43,9 +43,14 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show($id)
     {
-        $user = User::withcount('posts')->with('posts')->find($user->id);
+        $user = User::withcount('posts')->with('posts')->find($id);
+        if(!$user){
+            return response()->json([
+                'message'=> 'User Not ound',
+            ]);
+        }
         return new UserResource($user);
     }
 

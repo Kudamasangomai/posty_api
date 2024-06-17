@@ -44,16 +44,15 @@ class PostController extends Controller
     {
         $validated = $request->validated();
         $validated['user_id'] = auth()->id();
-        $validated['image'] = $request->file('image')->store('uploads','public');
+        $validated['image'] = $request->file('image')->store('uploads', 'public');
         $post = Post::create($validated);
 
-        if($post){
+        if ($post) {
             return response()->json([
-               'data'=> new PostResource($post),
+                'data' => new PostResource($post),
                 'message' => 'Post Succesfully Created',
-            ],Response::HTTP_CREATED);
+            ], Response::HTTP_CREATED);
         }
-
     }
 
     /**
@@ -86,10 +85,16 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
 
+        $post = Post::find($id);
         Gate::authorize('delete', $post);
+        if (!$post) {
+            return response()->json([
+                'message' => 'Post Not Found',
+            ]);
+        }
         $post->delete();
         return response()->json([
             'message' => 'Post Succesfully Deleted',
