@@ -34,11 +34,5 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Scramble::extendOpenApi(function (OpenApi $openApi) {
-            $openApi->secure(
-                SecurityScheme::http('bearer', 'token')
-            );
-        });
-
     }
 }
