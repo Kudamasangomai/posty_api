@@ -29,8 +29,8 @@ class PostController extends Controller
         $posts = QueryBuilder::for(Post::class)
             ->allowedSorts(['created_at'])
             ->allowedFilters('user_id')
-            ->allowedIncludes('user')
-            ->paginate(5);
+            ->with('user')
+            ->paginate(100);
         return new PostCollection($posts);
     }
 
