@@ -84,12 +84,22 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePostRequest $request, Post $post)
+    public function update(UpdatePostRequest $request,$id)
     {
+
+        $post = Post::find($id);      
+        if (!$post) {
+            return response()->json([
+                'message' => 'Post Not Found',
+            ]);
+        }
         $this->authorize('update', $post);
         $validated = $request->validated();
         $post->update($validated);
-        return new PostResource($post);
+        return response()->json([
+            'data' => new PostResource($post),
+            'message' => 'Post Succesfully Created',
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -99,12 +109,13 @@ class PostController extends Controller
     {
 
         $post = Post::find($id);
-        Gate::authorize('delete', $post);
+      
         if (!$post) {
             return response()->json([
                 'message' => 'Post Not Found',
             ]);
         }
+        Gate::authorize('delete', $post);
         $post->delete();
         return response()->json([
             'message' => 'Post Succesfully Deleted',
