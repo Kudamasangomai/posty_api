@@ -12,6 +12,25 @@ use function Laravel\Prompts\password;
 
 class AuthController extends Controller
 {
+    /**
+     * Login
+     *
+     * This endpoint is used to login a user to the system.
+     *
+     * @bodyParam email string required Example: ian@gmail.com
+     * @bodyParam password string required Example: 12345678
+     *
+     * @response scenario="Successful Login" {
+     * "message": "User Login Successfully",
+     * "access_token": "8|MgowQLkdpShwrb8AI9j1YAGmwnDjAOeE17XrP5nb",
+     * "token_type": "Bearer"
+     * }
+     *
+     * @response 401 scenario="Failed Login"{
+     * "message": "Invalid login credentials"
+     * }
+     *
+     */
     public function login(LoginRequest $request)
     {
         $userdata = $request->validated();

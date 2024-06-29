@@ -18,6 +18,11 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    /**
+     * 
+     * 
+     */
     public function index()
     {
 
