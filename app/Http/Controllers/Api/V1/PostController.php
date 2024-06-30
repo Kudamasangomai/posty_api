@@ -21,7 +21,7 @@ class PostController extends Controller
 
     /**
      * 
-     * 
+     * @group Posts
      */
     public function index()
     {
@@ -36,6 +36,7 @@ class PostController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     * @group Posts
      */
     public function create()
     {
@@ -44,6 +45,7 @@ class PostController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @group Posts
      */
     public function store(StorePostRequest $request)
     {
@@ -62,6 +64,7 @@ class PostController extends Controller
 
     /**
      * Display the specified resource.
+     * @group Posts
      */
     public function show($id)
     {
@@ -83,6 +86,7 @@ class PostController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @group Posts
      */
     public function update(UpdatePostRequest $request,$id)
     {
@@ -104,6 +108,7 @@ class PostController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @group Posts
      */
     public function destroy($id)
     {
@@ -122,6 +127,10 @@ class PostController extends Controller
         ]);
     }
 
+     /**
+     * 
+     * @group Posts
+     */
     public function search($searchword)
     {
         return new PostCollection(Post::with('user')->where('post', 'like', '%' . $searchword . '%')->paginate(5));

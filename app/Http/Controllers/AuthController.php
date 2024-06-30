@@ -14,6 +14,7 @@ class AuthController extends Controller
 {
     /**
      * Login
+     *   
      *
      * This endpoint is used to login a user to the system.
      *
@@ -29,7 +30,7 @@ class AuthController extends Controller
      * @response 401 scenario="Failed Login"{
      * "message": "Invalid login credentials"
      * }
-     *
+     * @group Auth
      */
     public function login(LoginRequest $request)
     {
@@ -65,6 +66,10 @@ class AuthController extends Controller
     }
 
 
+    /**
+     *  @group Auth
+     */
+
     public function register(RegisterRequest $request)
     {
         $data = $request->validated();
@@ -81,6 +86,9 @@ class AuthController extends Controller
     }
 
 
+    /**
+     *  @group Auth
+     */
 
     public function logout()
     {

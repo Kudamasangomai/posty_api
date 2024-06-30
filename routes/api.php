@@ -19,9 +19,6 @@ use App\Http\Controllers\Authcontroller as ControllersAuthcontroller;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 Route::post('login',[AuthController::class,'login'])->name('login');
 Route::post('register',[AuthController::class,'register'])->name('register');
@@ -30,6 +27,8 @@ Route::post('logout',[AuthController::class,'logout'])->name('logout')->middlewa
 
 Route::group(['prefix'=>'v1', 'middleware'=>'auth:sanctum'], function(){
 
+
+Route::get('/user', function (Request $request) { return $request->user(); });
 Route::apiResource('posts',PostController::class);
 Route::apiResource('users',UserController::class);
 Route::get('/posts/search/{searchword}',[PostController::class,'search']);

@@ -13,6 +13,7 @@ class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * @group Users
      */
     public function index()
     {
@@ -34,6 +35,7 @@ class UserController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @group Users
      */
     public function store(Request $request)
     {
@@ -42,6 +44,7 @@ class UserController extends Controller
 
     /**
      * Display the specified resource.
+     * @group Users
      */
     public function show($id)
     {
@@ -54,6 +57,8 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
+ 
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -64,17 +69,19 @@ class UserController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *  @group Users
      */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+    // public function update(Request $request, string $id)
+    // {
+    //     return $request;
+    // }
 
     /**
      * Remove the specified resource from storage.
+     *  @group Users
      */
-    public function destroy(string $id)
-    {
-        //
-    }
+    // public function destroy(string $id)
+    // {
+    //     //
+    // }
 }
