@@ -47,6 +47,17 @@ class UserController extends Controller
      * Display the specified resource.
      * @group Users
      */
+     /**
+    * @OA\Get(
+    * path="/api/v1/users/{id}",
+    * summary="Get a User",
+    * tags={"Users"},
+    * @OA\Response(
+    * response=200,
+    * description="Get a Single user",
+    * ),
+    * )
+    */
     public function show($id)
     {
         $user = User::withcount('posts')->with('posts')->find($id);

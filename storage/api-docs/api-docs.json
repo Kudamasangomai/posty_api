@@ -1,0 +1,116 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Post Api Docs ",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/posts": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Get a list of Posts",
+                "operationId": "7b253f6aade6833019f938c1f2ef08ed",
+                "responses": {
+                    "200": {
+                        "description": "List of Posts"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "store a Posts",
+                "operationId": "b996500c6caf55100cd024d3e3b49dd5",
+                "responses": {
+                    "200": {
+                        "description": "List of Posts"
+                    }
+                }
+            }
+        },
+        "/api/v1/posts/{id}": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Store a Display a  Post",
+                "operationId": "db686e4ed73ae7ca2424e0a4f740c8b2",
+                "responses": {
+                    "200": {
+                        "description": "List of Posts"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Update a  Post",
+                "operationId": "98c3c32a86125c864caa21999f234493",
+                "responses": {
+                    "200": {
+                        "description": "List of Posts"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Remove a Post",
+                "operationId": "82927d2153173c1a7d6ab1e9d52ff56e",
+                "responses": {
+                    "200": {
+                        "description": "List of Posts"
+                    }
+                }
+            }
+        },
+        "/api/v1/posts/{searchword}": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Search for a Post",
+                "operationId": "eb9dc91b3681de6aab8e46a17fc6ab06",
+                "responses": {
+                    "200": {
+                        "description": "List of Posts"
+                    }
+                }
+            }
+        },
+        "/api/v1/users/{id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get a User",
+                "operationId": "a9d321d5dc6bc2613c6cf5ba92b76c89",
+                "responses": {
+                    "200": {
+                        "description": "Get a Single user"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            },
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    }
+}

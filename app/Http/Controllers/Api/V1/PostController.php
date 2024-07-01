@@ -19,6 +19,18 @@ class PostController extends Controller
      * @group Posts
      * 
      */
+
+    /**
+    * @OA\Get(
+    * path="/api/v1/posts",
+    * summary="Get a list of Posts",
+    * tags={"Posts"},
+    * @OA\Response(
+    * response=200,
+    * description="List of Posts",
+    * ),
+    * )
+    */
     public function index()
     {
 
@@ -34,6 +46,18 @@ class PostController extends Controller
      * Store a newly created resource in storage.
      * @group Posts
      */
+
+    /**
+    * @OA\Post(
+    * path="/api/v1/posts",
+    * summary="store a Posts",
+    * tags={"Posts"},
+    * @OA\Response(
+    * response=200,
+    * description="List of Posts",
+    * ),
+    * )
+    */
     public function store(StorePostRequest $request)
     {
         $validated = $request->validated();
@@ -53,6 +77,18 @@ class PostController extends Controller
      * Display the specified resource.
      * @group Posts
      */
+
+        /**
+    * @OA\Get(
+    * path="/api/v1/posts/{id}",
+    * summary="Store a Display a  Post",
+    * tags={"Posts"},
+    * @OA\Response(
+    * response=200,
+    *  description="List of Posts",
+    * ),
+    * )
+    */
     public function show($id)
     {
         $post = Post::with('user')->find($id);
@@ -68,6 +104,18 @@ class PostController extends Controller
      * Update the specified resource in storage.
      * @group Posts
      */
+
+    /**
+    * @OA\Put(
+    * path="/api/v1/posts/{id}",
+    * summary="Update a  Post",
+    * tags={"Posts"},
+    * @OA\Response(
+    * response=200,
+    * description="List of Posts",
+    * ),
+    * )
+    */
     public function update(UpdatePostRequest $request,$id)
     {
 
@@ -90,6 +138,18 @@ class PostController extends Controller
      * Remove the specified resource from storage.
      * @group Posts
      */
+
+        /**
+    * @OA\Delete(
+    * path="/api/v1/posts/{id}",
+    * summary="Remove a Post",
+    * tags={"Posts"},
+    * @OA\Response(
+    * response=200,
+       * description="List of Posts",
+    * ),
+    * )
+    */
     public function destroy($id)
     {
 
@@ -111,6 +171,18 @@ class PostController extends Controller
      * Search for a specified resource from storage.
      * @group Posts
      */
+
+        /**
+    * @OA\Get(
+    * path="/api/v1/posts/{searchword}",
+    * summary="Search for a Post",
+    * tags={"Posts"},
+    * @OA\Response(
+    * response=200,
+       * description="List of Posts",
+    * ),
+    * )
+    */
     public function search($searchword)
     {
             return new PostCollection(Post::with('user')->where('post', 'like', '%' . $searchword . '%')->paginate(5));
