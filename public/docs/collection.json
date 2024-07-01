@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Laravel REST API",
-        "_postman_id": "15f10352-422d-4af7-b6d7-8cfbbde0fa3d",
+        "_postman_id": "9eb98d92-388b-43bb-b1d4-16c16fa79a8e",
         "description": "Laravel Api",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -85,7 +85,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"omnis\",\"email\":\"emma.johnson@example.net\",\"password\":\"quos\"}"
+                            "raw": "{\"name\":\"aliquam\",\"email\":\"ekuhn@example.net\",\"password\":\"ut\"}"
                         },
                         "description": "",
                         "auth": {
@@ -181,78 +181,6 @@
                     ]
                 },
                 {
-                    "name": "Update the specified resource in storage.",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/v1\/users\/:id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/v1\/users\/:id",
-                            "variable": [
-                                {
-                                    "id": "id",
-                                    "key": "id",
-                                    "value": "eius",
-                                    "description": "The ID of the user."
-                                }
-                            ]
-                        },
-                        "method": "PUT",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "@group Users",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Remove the specified resource from storage.",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/v1\/users\/:id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/v1\/users\/:id",
-                            "variable": [
-                                {
-                                    "id": "id",
-                                    "key": "id",
-                                    "value": "sit",
-                                    "description": "The ID of the user."
-                                }
-                            ]
-                        },
-                        "method": "DELETE",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "@group Users",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
-                },
-                {
                     "name": "GET api\/{fallbackPlaceholder}",
                     "request": {
                         "url": {
@@ -264,7 +192,7 @@
                                 {
                                     "id": "fallbackPlaceholder",
                                     "key": "fallbackPlaceholder",
-                                    "value": "1%2C",
+                                    "value": "gx9N3U",
                                     "description": ""
                                 }
                             ]
@@ -303,7 +231,7 @@
                                 },
                                 {
                                     "key": "x-ratelimit-remaining",
-                                    "value": "58"
+                                    "value": "59"
                                 },
                                 {
                                     "key": "access-control-allow-origin",
@@ -327,7 +255,7 @@
             "description": "",
             "item": [
                 {
-                    "name": "GET api\/v1\/posts",
+                    "name": "Display a listing of the resource.",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -403,7 +331,7 @@
                             "formdata": [
                                 {
                                     "key": "post",
-                                    "value": "izwjvdgljqpigpdweltxsgxynucxqceqhkfsrxczxwfixaag",
+                                    "value": "ofbxiyxqbstosjgnlwsgcftfogjnadyqrsvnmvehhvqwvvdpyssydqskmnkhlpodjlasgxicyvjhoooaukg",
                                     "type": "text",
                                     "description": "Must not be greater than 100 characters. Must be at least 10 characters."
                                 },
@@ -433,7 +361,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "aut",
+                                    "value": "repellat",
                                     "description": "The ID of the post."
                                 }
                             ]
@@ -493,7 +421,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "vel",
+                                    "value": "ratione",
                                     "description": "The ID of the post."
                                 }
                             ]
@@ -511,7 +439,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"post\":\"ysrisunefttaukqzqqfjtrqbejivgxy\"}"
+                            "raw": "{\"post\":\"qgppmqkinmrgjxvxxqwalmwqvodgybboxkp\"}"
                         },
                         "description": "",
                         "auth": {
@@ -532,7 +460,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "eius",
+                                    "value": "enim",
                                     "description": "The ID of the post."
                                 }
                             ]
@@ -557,7 +485,7 @@
                     "response": []
                 },
                 {
-                    "name": "GET api\/v1\/posts\/search\/{searchword}",
+                    "name": "Search for a specified resource from storage.",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -568,7 +496,7 @@
                                 {
                                     "id": "searchword",
                                     "key": "searchword",
-                                    "value": "temporibus",
+                                    "value": "non",
                                     "description": ""
                                 }
                             ]
@@ -714,7 +642,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "numquam",
+                                    "value": "est",
                                     "description": "The ID of the user."
                                 }
                             ]

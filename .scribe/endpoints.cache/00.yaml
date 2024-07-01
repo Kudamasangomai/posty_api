@@ -100,7 +100,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: omnis
+        example: aliquam
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -109,7 +109,7 @@ endpoints:
         name: email
         description: 'Must be a valid email address.'
         required: true
-        example: emma.johnson@example.net
+        example: ekuhn@example.net
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -118,15 +118,15 @@ endpoints:
         name: password
         description: ''
         required: true
-        example: quos
+        example: ut
         type: string
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanBodyParameters:
-      name: omnis
-      email: emma.johnson@example.net
-      password: quos
+      name: aliquam
+      email: ekuhn@example.net
+      password: ut
     fileParameters: []
     responses: []
     responseFields: []

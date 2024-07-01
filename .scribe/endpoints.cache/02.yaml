@@ -12,7 +12,7 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: ''
+      title: 'Display a listing of the resource.'
       description: ''
       authenticated: false
       custom: []
@@ -70,7 +70,7 @@ endpoints:
         name: post
         description: 'Must not be greater than 100 characters. Must be at least 10 characters.'
         required: true
-        example: izwjvdgljqpigpdweltxsgxynucxqceqhkfsrxczxwfixaag
+        example: ofbxiyxqbstosjgnlwsgcftfogjnadyqrsvnmvehhvqwvvdpyssydqskmnkhlpodjlasgxicyvjhoooaukg
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -85,7 +85,7 @@ endpoints:
         exampleWasSpecified: false
         custom: []
     cleanBodyParameters:
-      post: izwjvdgljqpigpdweltxsgxynucxqceqhkfsrxczxwfixaag
+      post: ofbxiyxqbstosjgnlwsgcftfogjnadyqrsvnmvehhvqwvvdpyssydqskmnkhlpodjlasgxicyvjhoooaukg
     fileParameters:
       image: null
     responses: []
@@ -117,13 +117,13 @@ endpoints:
         name: id
         description: 'The ID of the post.'
         required: true
-        example: aut
+        example: repellat
         type: string
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanUrlParameters:
-      id: aut
+      id: repellat
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -169,13 +169,13 @@ endpoints:
         name: id
         description: 'The ID of the post.'
         required: true
-        example: vel
+        example: ratione
         type: string
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanUrlParameters:
-      id: vel
+      id: ratione
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -183,13 +183,13 @@ endpoints:
         name: post
         description: 'Must not be greater than 100 characters. Must be at least 10 characters.'
         required: true
-        example: ysrisunefttaukqzqqfjtrqbejivgxy
+        example: qgppmqkinmrgjxvxxqwalmwqvodgybboxkp
         type: string
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanBodyParameters:
-      post: ysrisunefttaukqzqqfjtrqbejivgxy
+      post: qgppmqkinmrgjxvxxqwalmwqvodgybboxkp
     fileParameters: []
     responses: []
     responseFields: []
@@ -220,13 +220,13 @@ endpoints:
         name: id
         description: 'The ID of the post.'
         required: true
-        example: eius
+        example: enim
         type: string
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanUrlParameters:
-      id: eius
+      id: enim
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -248,7 +248,7 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: ''
+      title: 'Search for a specified resource from storage.'
       description: ''
       authenticated: false
       custom: []
@@ -261,13 +261,13 @@ endpoints:
         name: searchword
         description: ''
         required: true
-        example: temporibus
+        example: non
         type: string
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanUrlParameters:
-      searchword: temporibus
+      searchword: non
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

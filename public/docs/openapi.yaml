@@ -86,15 +86,15 @@ paths:
                 name:
                   type: string
                   description: ''
-                  example: omnis
+                  example: aliquam
                 email:
                   type: string
                   description: 'Must be a valid email address.'
-                  example: emma.johnson@example.net
+                  example: ekuhn@example.net
                 password:
                   type: string
                   description: ''
-                  example: quos
+                  example: ut
               required:
                 - name
                 - email
@@ -132,55 +132,6 @@ paths:
       tags:
         - Endpoints
       security: []
-  '/api/v1/users/{id}':
-    put:
-      summary: 'Update the specified resource in storage.'
-      operationId: updateTheSpecifiedResourceInStorage
-      description: '@group Users'
-      parameters: []
-      responses: {  }
-      tags:
-        - Endpoints
-      security: []
-    delete:
-      summary: 'Remove the specified resource from storage.'
-      operationId: removeTheSpecifiedResourceFromStorage
-      description: '@group Users'
-      parameters: []
-      responses: {  }
-      tags:
-        - Endpoints
-      security: []
-    get:
-      summary: 'Display the specified resource.'
-      operationId: displayTheSpecifiedResource
-      description: ''
-      parameters: []
-      responses:
-        401:
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  message: Unauthenticated.
-                properties:
-                  message:
-                    type: string
-                    example: Unauthenticated.
-      tags:
-        - Users
-      security: []
-    parameters:
-      -
-        in: path
-        name: id
-        description: 'The ID of the user.'
-        example: eius
-        required: true
-        schema:
-          type: string
   '/api/{fallbackPlaceholder}':
     get:
       summary: ''
@@ -208,14 +159,14 @@ paths:
         in: path
         name: fallbackPlaceholder
         description: ''
-        example: '1,'
+        example: gx9N3U
         required: true
         schema:
           type: string
   /api/v1/posts:
     get:
-      summary: ''
-      operationId: getApiV1Posts
+      summary: 'Display a listing of the resource.'
+      operationId: displayAListingOfTheResource
       description: ''
       parameters: []
       responses:
@@ -252,7 +203,7 @@ paths:
                 post:
                   type: string
                   description: 'Must not be greater than 100 characters. Must be at least 10 characters.'
-                  example: izwjvdgljqpigpdweltxsgxynucxqceqhkfsrxczxwfixaag
+                  example: ofbxiyxqbstosjgnlwsgcftfogjnadyqrsvnmvehhvqwvvdpyssydqskmnkhlpodjlasgxicyvjhoooaukg
                 image:
                   type: string
                   format: binary
@@ -301,7 +252,7 @@ paths:
                 post:
                   type: string
                   description: 'Must not be greater than 100 characters. Must be at least 10 characters.'
-                  example: ysrisunefttaukqzqqfjtrqbejivgxy
+                  example: qgppmqkinmrgjxvxxqwalmwqvodgybboxkp
               required:
                 - post
       security: []
@@ -319,14 +270,14 @@ paths:
         in: path
         name: id
         description: 'The ID of the post.'
-        example: aut
+        example: repellat
         required: true
         schema:
           type: string
   '/api/v1/posts/search/{searchword}':
     get:
-      summary: ''
-      operationId: getApiV1PostsSearchSearchword
+      summary: 'Search for a specified resource from storage.'
+      operationId: searchForASpecifiedResourceFromStorage
       description: ''
       parameters: []
       responses:
@@ -350,7 +301,7 @@ paths:
         in: path
         name: searchword
         description: ''
-        example: temporibus
+        example: non
         required: true
         schema:
           type: string
@@ -385,6 +336,37 @@ paths:
       tags:
         - Users
       security: []
+  '/api/v1/users/{id}':
+    get:
+      summary: 'Display the specified resource.'
+      operationId: displayTheSpecifiedResource
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Users
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the user.'
+        example: est
+        required: true
+        schema:
+          type: string
 tags:
   -
     name: Auth

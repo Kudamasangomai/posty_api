@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Spatie\QueryBuilder\QueryBuilder;
 use App\Http\Resources\V1\UserResource;
@@ -52,36 +53,9 @@ class UserController extends Controller
         if(!$user){
             return response()->json([
                 'message'=> 'User Not ound',
-            ]);
+            ],Response::HTTP_NOT_FOUND);
         }
         return new UserResource($user);
     }
 
- 
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *  @group Users
-     */
-    // public function update(Request $request, string $id)
-    // {
-    //     return $request;
-    // }
-
-    /**
-     * Remove the specified resource from storage.
-     *  @group Users
-     */
-    // public function destroy(string $id)
-    // {
-    //     //
-    // }
 }
