@@ -91,10 +91,19 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of Posts"
+                        "description": "Success"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
                     },
                     "404": {
-                        "description": "not found"
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Server Error"
                     }
                 },
                 "security": [
@@ -109,9 +118,29 @@
                 ],
                 "summary": "Update a  Post",
                 "operationId": "98c3c32a86125c864caa21999f234493",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Post id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
+                    "201": {
+                        "description": "Post Created successfully "
+                    },
                     "200": {
-                        "description": "List of Posts"
+                        "description": "Success"
+                    },
+                    "422": {
+                        "description": "Validation errors"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
                     }
                 }
             },
@@ -136,22 +165,62 @@
                     "200": {
                         "description": "Post deleted Successfully"
                     },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
                     "404": {
                         "description": "Post Not Found"
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server Error"
                     }
                 }
             }
         },
-        "/api/v1/posts/{searchword}": {
+        "/api/v1/posts/search/{searchword}": {
             "get": {
                 "tags": [
                     "Posts"
                 ],
                 "summary": "Search for a Post",
-                "operationId": "eb9dc91b3681de6aab8e46a17fc6ab06",
+                "operationId": "9fceff0823e013a470de1c4a9f803768",
+                "parameters": [
+                    {
+                        "name": "searchword",
+                        "in": "path",
+                        "description": "post",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "List of Posts"
+                        "description": "Success"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Server Error"
                     }
                 }
             }

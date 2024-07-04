@@ -86,25 +86,13 @@ class PostController extends Controller
      * path="/api/v1/posts/{id}",
      * summary="Store a Display a  Post",
      * tags={"Posts"},
-     * security={
-     *  {"bearerAuth": {}},
-     *   },
-     *      @OA\Parameter(
-     *          name="id",
-     *          description="Post id",
-     *          required=true,
-     *          in="path",
-     *          @OA\Schema(
-     *              type="integer"
-     *          )
-     *      ),
-     * @OA\Response(
-     * response=200,
-     *  description="List of Posts",
-     * ),
-     *   @OA\Response(  *      response=404,
-     *      description="not found"
-     *   ),
+     * security={{"bearerAuth": {}},},
+     * @OA\Parameter(name="id",description="Post id",required=true,in="path", @OA\Schema(type="integer" )),
+     * @OA\Response(response=200,description="Success"),
+     * @OA\Response(response=401,description="Unauthenticated"),
+     * @OA\Response(response=403,description="Forbidden"),
+     * @OA\Response(response=404,description="Not Found"),
+     * @OA\Response(response=500,description="Server Error"),
      * )
      */
     public function show($id)
@@ -128,10 +116,11 @@ class PostController extends Controller
      * path="/api/v1/posts/{id}",
      * summary="Update a  Post",
      * tags={"Posts"},
-     * @OA\Response(
-     * response=200,
-     * description="List of Posts",
-     * ),
+     * @OA\Parameter(name="id",description="Post id",required=true,in="path",@OA\Schema(type="integer" )),
+     * @OA\Response(response=201,description="Post Created successfully "),
+     * @OA\Response(response=200,description="Success"),
+     * @OA\Response(response="422", description="Validation errors"),
+     * @OA\Response(response=401,description="Unauthenticated"),
      * )
      */
     public function update(UpdatePostRequest $request, $id)
@@ -162,16 +151,17 @@ class PostController extends Controller
      * path="/api/v1/posts/{id}",
      * summary="Remove a Post",
      * tags={"Posts"},
-     * @OA\Parameter( name="id",description="Post id",  required=true,in="path", @OA\Schema(type="integer" )),
-     * @OA\Response(response=200,description="Post deleted Successfully",),
-     * @OA\Response(response=204,description="No Content",),
-     * @OA\Response(response=404,description="Post Not Found",),
+     * @OA\Parameter( name="id",description="Post id",  required=true,in="path", @OA\Schema(type="integer")),
+     * @OA\Response(response=200,description="Post deleted Successfully"),
+     * @OA\Response(response=204,description="No Content"),
+     * @OA\Response(response=401,description="Unauthenticated"),
+     * @OA\Response(response=404,description="Post Not Found"),
+     * @OA\Response(response=403,description="Forbidden", @OA\JsonContent()),
+     * @OA\Response(response=500,description="Server Error"),
      * )
      */
     public function destroy($id)
     {
-        
-
         $post = Post::find($id);
 
         if (!$post) {
@@ -193,13 +183,15 @@ class PostController extends Controller
 
     /**
      * @OA\Get(
-     * path="/api/v1/posts/{searchword}",
+     * path="/api/v1/posts/search/{searchword}",
      * summary="Search for a Post",
      * tags={"Posts"},
-     * @OA\Response(
-     * response=200,
-     * description="List of Posts",
-     * ),
+     * @OA\Parameter(name="searchword", in="path", description="post",required=true,* @OA\Schema(type="string")),
+     * @OA\Response(response=200,description="Success"),
+     * @OA\Response(response=401,description="Unauthenticated"),
+     * @OA\Response(response=403,description="Forbidden"),
+     * @OA\Response(response=404,description="Not Found"),
+     * @OA\Response(response=500,description="Server Error"),
      * )
      */
     public function search($searchword)
