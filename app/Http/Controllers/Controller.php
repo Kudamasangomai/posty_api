@@ -10,7 +10,7 @@ use Illuminate\Routing\Controller as BaseController;
 /**
 * @OA\Info( title="Post Api Docs ", version="1.0.0",
 * @OA\Contact( email="Kudam775@gmail.com"), )
-* @OA\SecurityScheme(type="http",securityScheme="sanctum",scheme="sanctum", bearerFormat="JWT",
+* @OA\SecurityScheme(type="http",securityScheme="bearerAuth",scheme="bearer", bearerFormat="JWT",
 * )
 */
 
@@ -18,3 +18,11 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 }
+
+// SecurityScheme(
+//     * type="http",
+//     * securityScheme="bearerAuth",
+//     * scheme="bearer",
+//     * bearerFormat="JWT"
+//     * )
+//     */

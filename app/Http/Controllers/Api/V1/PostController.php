@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\QueryBuilder;
 use App\Http\Requests\StorePostRequest;
 use App\http\Resources\V1\PostResource;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdatePostRequest;
 use App\http\Resources\V1\PostCollection;
 
@@ -53,8 +54,15 @@ class PostController extends Controller
      * @OA\Post(
      * path="/api/v1/posts",
      * tags={"Posts"},
-     * summary="create a new post",
-     * @OA\Parameter(name="post", in="query", description="post",required=true,* @OA\Schema(type="string")),
+     * summary="Create a new post",
+     * 
+     *  *      @OA\RequestBody( required=true,
+     *         @OA\MediaType(mediaType="multipart/form-data",
+     *             @OA\Schema( 
+     *                      @OA\Property( property="post", type="string",description="New post", ),
+     *                      @OA\Property(property="image",type="file",description="image post", ),
+     *                      required={"post"}))
+     *                      ),
      * @OA\Response(response=201,description="Post Created successfully "),
      * @OA\Response(response=200,description="Success"),
      * @OA\Response(response="422", description="Validation errors"),
@@ -118,17 +126,10 @@ class PostController extends Controller
      * summary="Update Existing Post",
      * tags={"Posts"},
      *    @OA\Parameter(name="id",  description="Project id", required=true, in="path",  @OA\Schema( type="integer" ) ),
-   *      @OA\RequestBody(
-    *         required=true,
-    *         @OA\MediaType(
-    *             mediaType="application/x-www-form-urlencoded",
-    *             @OA\Schema( 
-    *                       
-    *                          @OA\Property( property="post", type="string",description="New post", ),
-    *                 required={"post"}
-    *             )
-    *         )
-    *     ),
+     *      @OA\RequestBody( required=true,
+     *         @OA\MediaType(mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema( @OA\Property( property="post", type="string",description="New post", ),required={"post"}))
+     *                      ),
      * @OA\Response(response=201,description="Post Created successfully "),
      * @OA\Response(response=200,description="Success"),
      * @OA\Response(response="422", description="Validation errors"),
@@ -152,6 +153,10 @@ class PostController extends Controller
             'data' => new PostResource($post),
             'message' => 'Post Succesfully Updated',
         ], Response::HTTP_OK);
+
+
+
+        
     }
 
     /**

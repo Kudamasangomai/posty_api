@@ -42,19 +42,31 @@
                 "tags": [
                     "Posts"
                 ],
-                "summary": "create a new post",
+                "summary": "Create a new post",
                 "operationId": "b996500c6caf55100cd024d3e3b49dd5",
-                "parameters": [
-                    {
-                        "name": "post",
-                        "in": "query",
-                        "description": "post",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "post"
+                                ],
+                                "properties": {
+                                    "post": {
+                                        "description": "New post",
+                                        "type": "string"
+                                    },
+                                    "image": {
+                                        "description": "image post",
+                                        "type": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
                         }
                     }
-                ],
+                },
                 "responses": {
                     "201": {
                         "description": "Post Created successfully "
@@ -376,6 +388,11 @@
     },
     "components": {
         "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            },
             "sanctum": {
                 "type": "apiKey",
                 "description": "Enter token in format (Bearer <token>)",
