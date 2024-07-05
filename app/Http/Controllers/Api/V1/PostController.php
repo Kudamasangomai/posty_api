@@ -24,9 +24,10 @@ class PostController extends Controller
     /**
      * @OA\Get(
      * path="/api/v1/posts",
+     * security={ {"sanctum": {} }},
      * summary="Get a list of Posts",
      * tags={"Posts"},
-     * security={{"bearerAuth": {}},},
+     * @OA\Parameter( name="filter[user_id]", in="query",description="Filter posts by User id",required=false, @OA\Schema(type="integer") ),
      * @OA\Response(response=200,description="Success"),
      * @OA\Response(response=401,description="Unauthenticated"),
      * @OA\Response(response=403,description="Forbidden"),
@@ -94,7 +95,7 @@ class PostController extends Controller
      * path="/api/v1/posts/{id}",
      * summary="Store a Display a  Post",
      * tags={"Posts"},
-     * security={{"bearerAuth": {}},},
+     * security={ {"sanctum": {} }},
      * @OA\Parameter(name="id",description="Post id",required=true,in="path", @OA\Schema(type="integer" )),
      * @OA\Response(response=200,description="Success"),
      * @OA\Response(response=401,description="Unauthenticated"),
@@ -153,10 +154,6 @@ class PostController extends Controller
             'data' => new PostResource($post),
             'message' => 'Post Succesfully Updated',
         ], Response::HTTP_OK);
-
-
-
-        
     }
 
     /**
@@ -169,7 +166,7 @@ class PostController extends Controller
      * path="/api/v1/posts/{id}",
      * summary="Removes a Post only if you own it",
      * tags={"Posts"},
-     * security={{"bearerAuth": {}},},
+     * security={ {"sanctum": {} }},
      * @OA\Parameter( name="id",description="Post id",  required=true,in="path", @OA\Schema(type="integer")),
      * @OA\Response(response=200,description="Post deleted Successfully"),
      * @OA\Response(response=204,description="No Content"),
@@ -206,7 +203,7 @@ class PostController extends Controller
      * path="/api/v1/posts/search/{searchword}",
      * summary="Search for a Post",
      * tags={"Posts"},
-     * security={{"bearerAuth": {}},},
+     * security={ {"sanctum": {} }},
      * @OA\Parameter(name="searchword", in="path", description="post",required=true,* @OA\Schema(type="string")),
      * @OA\Response(response=200,description="Success"),
      * @OA\Response(response=401,description="Unauthenticated"),
