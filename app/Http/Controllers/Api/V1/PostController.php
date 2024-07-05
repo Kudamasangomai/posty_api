@@ -109,18 +109,31 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      * @group Posts
+     *   Property(property="image",type="file",description="image post", ),
      */
 
     /**
      * @OA\Put(
      * path="/api/v1/posts/{id}",
-     * summary="Update a  Post",
+     * summary="Update Existing Post",
      * tags={"Posts"},
-     * @OA\Parameter(name="id",description="Post id",required=true,in="path",@OA\Schema(type="integer" )),
+     *    @OA\Parameter(name="id",  description="Project id", required=true, in="path",  @OA\Schema( type="integer" ) ),
+   *      @OA\RequestBody(
+    *         required=true,
+    *         @OA\MediaType(
+    *             mediaType="application/x-www-form-urlencoded",
+    *             @OA\Schema( 
+    *                       
+    *                          @OA\Property( property="post", type="string",description="New post", ),
+    *                 required={"post"}
+    *             )
+    *         )
+    *     ),
      * @OA\Response(response=201,description="Post Created successfully "),
      * @OA\Response(response=200,description="Success"),
      * @OA\Response(response="422", description="Validation errors"),
      * @OA\Response(response=401,description="Unauthenticated"),
+     * @OA\Response(response=405,description="Method not Allowed"),
      * )
      */
     public function update(UpdatePostRequest $request, $id)
@@ -137,7 +150,7 @@ class PostController extends Controller
         $post->update($validated);
         return response()->json([
             'data' => new PostResource($post),
-            'message' => 'Post Succesfully Created',
+            'message' => 'Post Succesfully Updated',
         ], Response::HTTP_OK);
     }
 
@@ -149,15 +162,17 @@ class PostController extends Controller
     /**
      * @OA\Delete(
      * path="/api/v1/posts/{id}",
-     * summary="Remove a Post",
+     * summary="Removes a Post only if you own it",
      * tags={"Posts"},
+     * security={{"bearerAuth": {}},},
      * @OA\Parameter( name="id",description="Post id",  required=true,in="path", @OA\Schema(type="integer")),
      * @OA\Response(response=200,description="Post deleted Successfully"),
      * @OA\Response(response=204,description="No Content"),
      * @OA\Response(response=401,description="Unauthenticated"),
      * @OA\Response(response=404,description="Post Not Found"),
-     * @OA\Response(response=403,description="Forbidden", @OA\JsonContent()),
-     * @OA\Response(response=500,description="Server Error"),
+     * @OA\Response(response=403,description="Forbidden"),
+     * @OA\Response(response=500,description="Server Error")
+     * 
      * )
      */
     public function destroy($id)
@@ -173,7 +188,7 @@ class PostController extends Controller
         $post->delete();
         return response()->json([
             'message' => 'Post Succesfully Deleted',
-        ], Response::HTTP_NO_CONTENT);
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -186,6 +201,7 @@ class PostController extends Controller
      * path="/api/v1/posts/search/{searchword}",
      * summary="Search for a Post",
      * tags={"Posts"},
+     * security={{"bearerAuth": {}},},
      * @OA\Parameter(name="searchword", in="path", description="post",required=true,* @OA\Schema(type="string")),
      * @OA\Response(response=200,description="Success"),
      * @OA\Response(response=401,description="Unauthenticated"),

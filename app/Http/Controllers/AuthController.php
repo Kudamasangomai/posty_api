@@ -133,19 +133,8 @@ class AuthController extends Controller
  *              @OA\Property(property="data", type="object", example={}),
  *          )
  *      ),
- *      @OA\Response(
- *          response=401,
- *          description="Invalid token",
- *          @OA\JsonContent(
- *              @OA\Property(property="meta", type="object",
- *                  @OA\Property(property="code", type="number", example=422),
- *                  @OA\Property(property="status", type="string", example="error"),
- *                  @OA\Property(property="message", type="string", example="Unauthenticated."),
- *              ),
- *              @OA\Property(property="data", type="object", example={}),
- *          )
- *      ),
- * security={{"bearerAuth": {}},},
+ *      @OA\Response(response=401, description="Invalid token",)),
+ *      security={{"bearerAuth": {}},},
  * )
  */
 

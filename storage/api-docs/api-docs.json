@@ -116,19 +116,38 @@
                 "tags": [
                     "Posts"
                 ],
-                "summary": "Update a  Post",
+                "summary": "Update Existing Post",
                 "operationId": "98c3c32a86125c864caa21999f234493",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Post id",
+                        "description": "Project id",
                         "required": true,
                         "schema": {
                             "type": "integer"
                         }
                     }
                 ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "post"
+                                ],
+                                "properties": {
+                                    "post": {
+                                        "description": "New post",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201": {
                         "description": "Post Created successfully "
@@ -141,6 +160,9 @@
                     },
                     "401": {
                         "description": "Unauthenticated"
+                    },
+                    "405": {
+                        "description": "Method not Allowed"
                     }
                 }
             },
@@ -148,7 +170,7 @@
                 "tags": [
                     "Posts"
                 ],
-                "summary": "Remove a Post",
+                "summary": "Removes a Post only if you own it",
                 "operationId": "82927d2153173c1a7d6ab1e9d52ff56e",
                 "parameters": [
                     {
@@ -175,17 +197,17 @@
                         "description": "Post Not Found"
                     },
                     "403": {
-                        "description": "Forbidden",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
+                        "description": "Forbidden"
                     },
                     "500": {
                         "description": "Server Error"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/posts/search/{searchword}": {
@@ -222,7 +244,12 @@
                     "500": {
                         "description": "Server Error"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/users/{id}": {
@@ -341,54 +368,14 @@
                         }
                     },
                     "401": {
-                        "description": "Invalid token",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "meta": {
-                                            "properties": {
-                                                "code": {
-                                                    "type": "number",
-                                                    "example": 422
-                                                },
-                                                "status": {
-                                                    "type": "string",
-                                                    "example": "error"
-                                                },
-                                                "message": {
-                                                    "type": "string",
-                                                    "example": "Unauthenticated."
-                                                }
-                                            },
-                                            "type": "object"
-                                        },
-                                        "data": {
-                                            "type": "object",
-                                            "example": []
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
+                        "description": "Invalid token"
                     }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
+                }
             }
         }
     },
     "components": {
         "securitySchemes": {
-            "bearerAuth": {
-                "type": "http",
-                "bearerFormat": "JWT",
-                "scheme": "bearer"
-            },
             "sanctum": {
                 "type": "apiKey",
                 "description": "Enter token in format (Bearer <token>)",
