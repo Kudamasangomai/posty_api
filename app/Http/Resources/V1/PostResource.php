@@ -20,8 +20,7 @@ class PostResource extends JsonResource
             'image' => $this->image,
             'created' => $this->created_at->diffForHumans(),
             'user'=>new UserResource($this->whenLoaded('user')),
-        
-           
+            'likes_count' => $this->whenCounted('likes'),
             
         ];
     }

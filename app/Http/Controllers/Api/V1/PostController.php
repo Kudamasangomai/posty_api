@@ -12,6 +12,8 @@ use App\http\Resources\V1\PostResource;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdatePostRequest;
 use App\http\Resources\V1\PostCollection;
+use App\Models\Like;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -41,7 +43,8 @@ class PostController extends Controller
         $posts = QueryBuilder::for(Post::orderBy('created_at', 'desc'))
             ->allowedSorts(['created_at'])
             ->allowedFilters('user_id')
-            ->with('user')
+            ->with('user','likes')
+            ->withCount('likes')
             ->paginate(100);
         return new PostCollection($posts);
     }
@@ -215,5 +218,33 @@ class PostController extends Controller
     public function search($searchword)
     {
         return new PostCollection(Post::with('user')->where('post', 'like', '%' . $searchword . '%')->paginate(5));
+    }
+
+
+        /**
+     * @OA\Post(
+     * path="/api/v1/posts/like/{id}",
+     * summary="Like a Post",
+     * tags={"Posts"},
+     * security={ {"sanctum": {} }},
+     * @OA\Parameter(name="id", in="path", description="post id",required=true,* @OA\Schema(type="integer")),
+     * @OA\Response(response=200,description="Success"),
+     * @OA\Response(response=401,description="Unauthenticated"),
+     * @OA\Response(response=403,description="Forbidden"),
+     * @OA\Response(response=404,description="Not Found"),
+     * @OA\Response(response=500,description="Server Error"),
+     * )
+     */
+    public function like($id)
+    {
+        $like = Like::where('post_id',$id)->where('user_id',Auth::user()->id)->first();
+        if ($like) {
+            $like->delete();
+        } else {
+            Like::create([
+                'post_id' => $id,
+                'user_id' => auth()->id(),
+            ]);
+        }
     }
 }
