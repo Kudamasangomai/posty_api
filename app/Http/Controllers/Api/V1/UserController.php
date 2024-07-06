@@ -48,16 +48,19 @@ class UserController extends Controller
      * @group Users
      */
      /**
-    * @OA\Get(
-    * path="/api/v1/users/{id}",
-    * summary="Get a User",
-    * tags={"Users"},
-    * @OA\Response(
-    * response=200,
-    * description="Get a Single user",
-    * ),
-    * )
-    */
+     * @OA\Get(
+     * path="/api/v1/users/{id}",
+     * summary="Get User ",
+     * tags={"Users"},
+     * security={ {"sanctum": {} }},
+     * @OA\Parameter(name="id",description="User id",required=true,in="path", @OA\Schema(type="integer" )),
+     * @OA\Response(response=200,description="Success"),
+     * @OA\Response(response=401,description="Unauthenticated"),
+     * @OA\Response(response=403,description="Forbidden"),
+     * @OA\Response(response=404,description="Not Found"),
+     * @OA\Response(response=500,description="Server Error"),
+     * )
+     */
     public function show($id)
     {
         $user = User::withcount('posts')->with('posts')->find($id);
