@@ -16,6 +16,20 @@ class UserController extends Controller
      * Display a listing of the resource.
      * @group Users
      */
+
+       /**
+     * @OA\Get(
+     * path="/api/v1/users",
+     * summary="Display All users",
+     * tags={"Users"},
+     * security={ {"sanctum": {} }},
+     * @OA\Response(response=200,description="Success"),
+     * @OA\Response(response=401,description="Unauthenticated"),
+     * @OA\Response(response=403,description="Forbidden"),
+     * @OA\Response(response=404,description="Not Found"),
+     * @OA\Response(response=500,description="Server Error"),
+     * )
+     */
     public function index()
     {
         $users = QueryBuilder::for(User::class)
