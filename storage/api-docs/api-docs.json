@@ -92,7 +92,12 @@
                     "401": {
                         "description": "Unauthenticated"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
         "/api/v1/posts/{id}": {
@@ -188,7 +193,12 @@
                     "405": {
                         "description": "Method not Allowed"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [

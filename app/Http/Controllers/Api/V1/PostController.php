@@ -59,7 +59,7 @@ class PostController extends Controller
      * path="/api/v1/posts",
      * tags={"Posts"},
      * summary="Create a new post",
-     * 
+     * security={ {"sanctum": {} }},
      *  *      @OA\RequestBody( required=true,
      *         @OA\MediaType(mediaType="multipart/form-data",
      *             @OA\Schema( 
@@ -128,6 +128,7 @@ class PostController extends Controller
      * @OA\Put(
      * path="/api/v1/posts/{id}",
      * summary="Update Existing Post",
+     * security={ {"sanctum": {} }},
      * tags={"Posts"},
      *    @OA\Parameter(name="id",  description="Project id", required=true, in="path",  @OA\Schema( type="integer" ) ),
      *      @OA\RequestBody( required=true,
