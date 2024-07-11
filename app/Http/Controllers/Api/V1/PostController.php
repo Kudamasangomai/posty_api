@@ -76,9 +76,8 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
         $validated = $request->validated();
-        $validated['user_id'] = auth()->id();
         $validated['image'] = $request->file('image')->store('uploads', 'public');
-        $post = Post::create($validated);
+        $post = Post::create($validated + ['user_id' => auth()->id()]);
 
         if ($post) {
             return response()->json([
