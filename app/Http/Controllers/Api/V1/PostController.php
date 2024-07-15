@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Models\Like;
 use App\Models\Post;
+use App\Mail\PostLiked;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 use Spatie\QueryBuilder\QueryBuilder;
 use App\Http\Requests\StorePostRequest;
 use App\http\Resources\V1\PostResource;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdatePostRequest;
 use App\http\Resources\V1\PostCollection;
-use App\Models\Like;
-use Illuminate\Support\Facades\Auth;
+use Exception;
+use PhpParser\Node\Stmt\TryCatch;
 
 class PostController extends Controller
 {
@@ -238,13 +242,21 @@ class PostController extends Controller
     public function like($id)
     {
         $like = Like::where('post_id',$id)->where('user_id',Auth::user()->id)->first();
+        $post = Post::findOrFail($id);
         if ($like) {
             $like->delete();
         } else {
-            Like::create([
-                'post_id' => $id,
-                'user_id' => auth()->id(),
-            ]);
+            try {
+                Like::create([
+                    'post_id' => $id,
+                    'user_id' => auth()->id(),
+                ]);
+                Mail::to($post->user->email)->send(new PostLiked($post, Auth::user()));
+            } catch (Exception $e) {
+               dd($e);
+            }
+           
         }
+       
     }
 }
