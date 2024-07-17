@@ -99,7 +99,7 @@ class PostController extends Controller
     /**
      * @OA\Get(
      * path="/api/v1/posts/{id}",
-     * summary="Store a Display a  Post",
+     * summary="Display a specified  Post",
      * tags={"Posts"},
      * security={ {"sanctum": {} }},
      * @OA\Parameter(name="id",description="Post id",required=true,in="path", @OA\Schema(type="integer" )),

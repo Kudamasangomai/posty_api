@@ -2,6 +2,7 @@
     "openapi": "3.0.0",
     "info": {
         "title": "Post Api Docs ",
+        "description": "Api for Posting",
         "contact": {
             "name": "Kudakwashe Masangomai",
             "email": "Kudam775@gmail.com"
@@ -105,7 +106,7 @@
                 "tags": [
                     "Posts"
                 ],
-                "summary": "Store a Display a  Post",
+                "summary": "Display a specified  Post",
                 "operationId": "db686e4ed73ae7ca2424e0a4f740c8b2",
                 "parameters": [
                     {

@@ -8,7 +8,7 @@ use Illuminate\Routing\Controller as BaseController;
 
   
 /**
-* @OA\Info( title="Post Api Docs ", version="1.0.0",
+* @OA\Info( title="Post Api Docs ", version="1.0.0",* description = "Api for Posting",
 * @OA\Contact(name="Kudakwashe Masangomai", email="Kudam775@gmail.com"), )
 * @OA\SecurityScheme(type="http",securityScheme="sanctum",scheme="sanctum", bearerFormat="JWT",
 * )
