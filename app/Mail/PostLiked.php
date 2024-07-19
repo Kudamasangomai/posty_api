@@ -63,6 +63,7 @@ class PostLiked extends Mailable
         return $this->view('emails.post_liked')
             ->with([
                 'postid' => $this->post->id,
+                'user' =>   $this->user->name
 
             ]);
     }

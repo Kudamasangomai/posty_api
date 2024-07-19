@@ -16,6 +16,7 @@ use App\http\Resources\V1\PostResource;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdatePostRequest;
 use App\http\Resources\V1\PostCollection;
+use App\Jobs\ProcessLikedPost;
 use Exception;
 use PhpParser\Node\Stmt\TryCatch;
 
@@ -251,7 +252,8 @@ class PostController extends Controller
                     'post_id' => $id,
                     'user_id' => auth()->id(),
                 ]);
-                Mail::to($post->user->email)->send(new PostLiked($post, Auth::user()));
+            
+                ProcessLikedPost::dispatch($post,Auth::user());
             } catch (Exception $e) {
                dd($e);
             }
