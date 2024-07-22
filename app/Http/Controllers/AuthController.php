@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LoginRequest;
-use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 
+use App\Http\Requests\RegisterRequest;
 use function Laravel\Prompts\password;
 
 class AuthController extends Controller
@@ -90,6 +91,26 @@ class AuthController extends Controller
      *  @group Auth
      */
 
+     
+     /**
+     * @OA\Post(
+     * path="/api/register",
+     *   tags={"Auth"},
+     *   summary="Register",
+     *   operationId="Register",
+     *
+     *  @OA\Parameter(name="name",in="query",required=true,@OA\Schema(type="string")),
+     *   @OA\Parameter(name="email",in="query",required=true,@OA\Schema(type="string")),
+     *   @OA\Parameter(name="password",in="query",required=true, @OA\Schema(type="string") ),
+     *   @OA\Response(response=200,description="Success",
+     *   @OA\MediaType(mediaType="application/json",)),
+     *   @OA\Response(response=401, description="Unauthenticated" ),
+     *   @OA\Response(response=400,description="Bad Request" ),
+     *   @OA\Response(response=404,description="Not found"),
+     *   @OA\Response(response=403,description="Forbidden")
+     *)
+     **/
+
     public function register(RegisterRequest $request)
     {
         $data = $request->validated();
@@ -138,11 +159,23 @@ class AuthController extends Controller
  * )
  */
 
-    public function logout()
+    public function logout(Request $request)
     {
         // Auth::user()->tokens()->delete();
-        return [
-            'message' => 'Succesfully Logged out'
-        ];
+      
+        try {
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return [
+                'message' => 'Succesfully Logged out'
+            ];
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+          
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+      
+       
     }
 }

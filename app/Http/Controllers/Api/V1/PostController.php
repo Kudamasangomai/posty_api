@@ -255,7 +255,11 @@ class PostController extends Controller
             
                 ProcessLikedPost::dispatch($post,Auth::user());
             } catch (Exception $e) {
-               dd($e);
+              
+               return response()->json([
+                // 'message' => $e->getMessage(),
+                'message' => 'An error occurred while processing your request. Please try again later.',
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
            
         }
