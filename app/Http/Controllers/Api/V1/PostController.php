@@ -72,17 +72,23 @@ class PostController extends Controller
      *                      @OA\Property(property="image",type="file",description="image post", ),
      *                      required={"post"}))
      *                      ),
-     * @OA\Response(response=201,description="Post Created successfully "),
+     * @OA\Response(response=201,description="Post Created"),
      * @OA\Response(response=200,description="Success"),
      * @OA\Response(response="422", description="Validation errors"),
      * @OA\Response(response=401,description="Unauthenticated"),
+     * @OA\Response(response=500,description="Server Error"),
      * )
      */
     public function store(StorePostRequest $request)
     {
         $validated = $request->validated();
-        $validated['image'] = $request->file('image')->store('uploads', 'public');
-        $post = Post::create($validated + ['user_id' => auth()->id()]);
+        // $validated['image'] = $request->file('image')->store('uploads', 'public');
+        $post = Post::create($validated + 
+        
+        ['user_id' => auth()->id(),
+            'image' => $request->file('image')->store('uploads', 'public'),
+    
+        ]);
 
         if ($post) {
             return response()->json([
@@ -139,8 +145,8 @@ class PostController extends Controller
      *         @OA\MediaType(mediaType="application/x-www-form-urlencoded",
      *             @OA\Schema( @OA\Property( property="post", type="string",description="New post", ),required={"post"}))
      *                      ),
-     * @OA\Response(response=201,description="Post Created successfully "),
      * @OA\Response(response=200,description="Success"),
+     * @OA\Response(response=201,description="Post Created"),
      * @OA\Response(response="422", description="Validation errors"),
      * @OA\Response(response=401,description="Unauthenticated"),
      * @OA\Response(response=405,description="Method not Allowed"),
@@ -156,12 +162,11 @@ class PostController extends Controller
             ], Response::HTTP_NOT_FOUND);
         }
         $this->authorize('update', $post);
-        $validated = $request->validated();
-        $post->update($validated);
+        $post->update($request->validated());
         return response()->json([
             'data' => new PostResource($post),
             'message' => 'Post Succesfully Updated',
-        ], Response::HTTP_OK);
+        ], Response::HTTP_CREATED);
     }
 
     /**

@@ -82,7 +82,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Post Created successfully "
+                        "description": "Post Created"
                     },
                     "200": {
                         "description": "Success"
@@ -92,6 +92,9 @@
                     },
                     "401": {
                         "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server Error"
                     }
                 },
                 "security": [
@@ -179,11 +182,11 @@
                     }
                 },
                 "responses": {
-                    "201": {
-                        "description": "Post Created successfully "
-                    },
                     "200": {
                         "description": "Success"
+                    },
+                    "201": {
+                        "description": "Post Created"
                     },
                     "422": {
                         "description": "Validation errors"
@@ -378,37 +381,6 @@
                         }
                     }
                 ],
-                "responses": {
-                    "200": {
-                        "description": "Success"
-                    },
-                    "401": {
-                        "description": "Unauthenticated"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    },
-                    "500": {
-                        "description": "Server Error"
-                    }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
-            }
-        },
-        "/api/v1/users/current_user": {
-            "get": {
-                "tags": [
-                    "Users"
-                ],
-                "summary": "Get Current User ",
-                "operationId": "20b03b38e87b1cd4d1f346de8f55503e",
                 "responses": {
                     "200": {
                         "description": "Success"
