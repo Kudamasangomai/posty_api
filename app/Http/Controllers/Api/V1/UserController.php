@@ -17,7 +17,7 @@ class UserController extends Controller
      * @group Users
      */
 
-       /**
+    /**
      * @OA\Get(
      * path="/api/v1/users",
      * summary="Display All users",
@@ -33,35 +33,17 @@ class UserController extends Controller
     public function index()
     {
         $users = QueryBuilder::for(User::class)
-            ->allowedSorts(['name','email','created_at'])
-            ->withCount('posts')
-            ->paginate(5);
+                ->allowedSorts(['name', 'email', 'created_at'])
+                ->withCount('posts')
+                ->paginate(5);
         return new UserCollection($users);
-        // return new UserCollection(User::withcount('posts')->paginate(5));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     * @group Users
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
      * Display the specified resource.
      * @group Users
      */
-     /**
+    /**
      * @OA\Get(
      * path="/api/v1/users/{id}",
      * summary="Get User ",
@@ -78,12 +60,11 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::withcount('posts')->with('posts')->find($id);
-        if(!$user){
+        if (!$user) {
             return response()->json([
-                'message'=> 'User Not ound',
-            ],Response::HTTP_NOT_FOUND);
+                'message' => 'User Not Found',
+            ], Response::HTTP_NOT_FOUND);
         }
         return new UserResource($user);
     }
-
 }

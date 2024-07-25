@@ -22,11 +22,6 @@ use PhpParser\Node\Stmt\TryCatch;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @group Posts
-     * 
-     */
 
     /**
      * @OA\Get(
@@ -46,18 +41,12 @@ class PostController extends Controller
     {
 
         $posts = QueryBuilder::for(Post::orderBy('created_at', 'desc'))
-            ->allowedSorts(['created_at'])
-            ->allowedFilters('user_id')
-            ->with('user','likes')
-            ->withCount('likes')
-            ->paginate(100);
+                ->allowedFilters('user_id')
+                ->with('user','likes')
+                ->withCount('likes')
+                ->paginate(50);
         return new PostCollection($posts);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     * @group Posts
-     */
 
     /**
      * @OA\Post(
@@ -82,13 +71,8 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
         $validated = $request->validated();
-        // $validated['image'] = $request->file('image')->store('uploads', 'public');
-        $post = Post::create($validated + 
-        
-        ['user_id' => auth()->id(),
-            'image' => $request->file('image')->store('uploads', 'public'),
-    
-        ]);
+        $validated['image'] = $request->file('image')->store('uploads', 'public');
+        $post = Post::create($validated + ['user_id' => auth()->id() ]);
 
         if ($post) {
             return response()->json([
@@ -97,11 +81,6 @@ class PostController extends Controller
             ], Response::HTTP_CREATED);
         }
     }
-
-    /**
-     * Display the specified resource.
-     * @group Posts
-     */
 
     /**
      * @OA\Get(
@@ -127,12 +106,6 @@ class PostController extends Controller
         }
         return new PostResource($post);
     }
-
-    /**
-     * Update the specified resource in storage.
-     * @group Posts
-     *   Property(property="image",type="file",description="image post", ),
-     */
 
     /**
      * @OA\Put(
@@ -169,10 +142,6 @@ class PostController extends Controller
         ], Response::HTTP_CREATED);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @group Posts
-     */
 
     /**
      * @OA\Delete(
@@ -206,11 +175,7 @@ class PostController extends Controller
         ], Response::HTTP_NO_CONTENT);
     }
 
-    /**
-     * Search for a specified resource from storage.
-     * @group Posts
-     */
-
+ 
     /**
      * @OA\Get(
      * path="/api/v1/posts/search/{searchword}",
@@ -247,7 +212,7 @@ class PostController extends Controller
      */
     public function like($id)
     {
-        $like = Like::where('post_id',$id)->where('user_id',Auth::user()->id)->first();
+        $like = Like::where('post_id',$id)->where('user_id',auth()->id(),)->first();
         $post = Post::findOrFail($id);
         if ($like) {
             $like->delete();
