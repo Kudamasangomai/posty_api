@@ -9,6 +9,8 @@ use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Requests\RegisterRequest;
+use Illuminate\Support\Facades\Password;
+
 use function Laravel\Prompts\password;
 
 class AuthController extends Controller
@@ -134,7 +136,7 @@ class AuthController extends Controller
    /**
  * Logout
  * @OA\Post (
- *     path="/api/logout",
+ *     path="/api/v1/logout",
  *     tags={"Auth"},
  *     @OA\RequestBody(
  *         @OA\MediaType(
@@ -178,4 +180,33 @@ class AuthController extends Controller
       
        
     }
+
+
+     /**
+     * @OA\Post(
+     *   path="/api/forgotpassword",
+     *   tags={"Auth"},
+     *   summary="Forgot password",
+     *   operationId="Forgot Password",
+     *
+     *   @OA\Parameter(name="email",in="query",required=true,@OA\Schema(type="string")),
+     *   @OA\Response(response=200,description="Success"),   
+     *   @OA\Response(response=401, description="Unauthenticated"),
+     *   @OA\Response(response=400,description="Bad Request"),
+     *   @OA\Response(response=404,description="Not found"),
+     *   @OA\Response(response=403,description="Forbidden")
+     *)
+     **/
+    public function forgotpassword(Request $request)
+    {
+        $userdata= $request->validate([
+            'email'=> 'required|email|exists:users,email'
+        ]);
+        Password::sendResetLink($userdata);
+        return response()->json([
+            'message' => 'Reset Password link has been send to your email',
+        ]);
+
+    }
+    
 }

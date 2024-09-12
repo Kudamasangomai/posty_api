@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Api\V1\PostController;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Authcontroller as ControllersAuthcontroller;
+use Illuminate\Http\Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,10 @@ use App\Http\Controllers\Authcontroller as ControllersAuthcontroller;
 
 Route::post('login',[AuthController::class,'login'])->name('login');
 Route::post('register',[AuthController::class,'register'])->name('register');
-Route::post('logout',[AuthController::class,'logout'])->name('logout')->middleware('auth:sanctum');
+
+Route::post('forgotpassword', [AuthController::class,'forgotpassword'])->name('forgotpassword');
+Route::get('passwordreset/{token}',[AuthController::class, 'passwordreset'])->name('password.reset');
+Route::post('passwordstore',[AuthController::class, 'passwordstore'])->name('password.store');
 
 
 Route::group(['prefix'=>'v1', 'middleware'=>'auth:sanctum'], function(){
@@ -33,12 +37,13 @@ Route::apiResource('posts',PostController::class);
 Route::apiResource('users',UserController::class);
 Route::get('/posts/search/{searchword}',[PostController::class,'search']);
 Route::post('/posts/like/{id}',[PostController::class,'like']);
-
+Route::post('logout',[AuthController::class,'logout'])->name('logout');
 
 });
 
 
 Route::fallback(function(){
     return response()->json([
-        'message' => 'Route Not Found. If error persists, contact Kudam775@gmail.com'], 404);
+        'message' => 'Route Not Found. If error persists, contact Kudam775@gmail.com'],
+    Response::HTTP_NOT_FOUND);
 });

@@ -98,12 +98,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::with('user')->find($id);
-        if (!$post) {
-            return response()->json([
-                'message' => 'Post Not Found',
-            ], Response::HTTP_NOT_FOUND);
-        }
+        $post = Post::with('user')->findOrFail($id);
         return new PostResource($post);
     }
 
@@ -128,12 +123,7 @@ class PostController extends Controller
     public function update(UpdatePostRequest $request, $id)
     {
 
-        $post = Post::find($id);
-        if (!$post) {
-            return response()->json([
-                'message' => 'Post Not Found',
-            ], Response::HTTP_NOT_FOUND);
-        }
+        $post = Post::findOrFail($id);
         $this->authorize('update', $post);
         $post->update($request->validated());
         return response()->json([
@@ -161,13 +151,7 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::find($id);
-
-        if (!$post) {
-            return response()->json([
-                'message' => 'Post Not Found',
-            ], Response::HTTP_NOT_FOUND);
-        }
+        $post = Post::findOrFail($id);
         Gate::authorize('delete', $post);
         $post->delete();
         return response()->json([
