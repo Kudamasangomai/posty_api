@@ -37,6 +37,7 @@ Route::apiResource('posts',PostController::class);
 Route::apiResource('users',UserController::class);
 Route::get('/posts/search/{searchword}',[PostController::class,'search']);
 Route::post('/posts/like/{id}',[PostController::class,'like']);
+Route::post('/posts/{id}/comment',[PostController::class,'comment']);
 Route::post('logout',[AuthController::class,'logout'])->name('logout');
 
 });

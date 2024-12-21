@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use Exception;
 use App\Models\Like;
 use App\Models\Post;
 use App\Mail\PostLiked;
+use App\Models\Comment;
 use Illuminate\Http\Response;
+use App\Jobs\ProcessLikedPost;
+use PhpParser\Node\Stmt\TryCatch;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -16,9 +20,7 @@ use App\http\Resources\V1\PostResource;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdatePostRequest;
 use App\http\Resources\V1\PostCollection;
-use App\Jobs\ProcessLikedPost;
-use Exception;
-use PhpParser\Node\Stmt\TryCatch;
+use App\Http\Requests\StoreCommentRequest;
 
 class PostController extends Controller
 {
@@ -218,5 +220,36 @@ class PostController extends Controller
            
         }
        
+    }
+
+    /**
+     * @OA\Post(
+     * path="/api/v1/posts/{id}/comment",
+     * summary="Comment a Post",
+     * tags={"Posts"},
+     * security={ {"sanctum": {} }},
+     *    @OA\Parameter(name="id",  description="Post id", required=true, in="path",  @OA\Schema( type="integer" ) ),
+     *      @OA\RequestBody( required=true,
+     *         @OA\MediaType(mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema( @OA\Property( property="comment", type="string",description="Comment", ),required={"comment"}))
+     *                      ),
+     * @OA\Response(response=200,description="Success"),
+     * @OA\Response(response=401,description="Unauthenticated"),
+     * @OA\Response(response=403,description="Forbidden"),
+     * @OA\Response(response=404,description="Not Found"),
+     * @OA\Response(response=500,description="Server Error"),
+     * )
+     */
+    public function comment(StoreCommentRequest $request ,$id)
+    {
+        $post = Post::findOrFail($id);   
+        $comment = Comment::create($request->validated() + ['user_id' => auth()->id(),'post_id'=>$post->id ]);
+
+        if ($comment) {
+            return response()->json([
+                'message' => 'Comment Saved',
+            ], Response::HTTP_CREATED);
+        }
+
     }
 }

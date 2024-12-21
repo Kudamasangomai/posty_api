@@ -9,9 +9,11 @@
 ## Features
 
 - Basic CRUD application for blog posts
-- Authorization and Authentication( laravel sanctum )
+- Authorization and Authentication( laravel sanctum , Policies )
 - Api endpoints for CRUD ,search and liking posts functions
 - Documentation generated using Swagger and Scribe
+- Jobs and queues
+- Email Sending
 
 ## Status
 
