@@ -20,6 +20,10 @@ use Illuminate\Http\Response;
 |
 */
 
+// Route::get('/{any}', function () {
+//     return view('welcome'); // Make sure you have resources/views/app.blade.php
+// })->where('any', '.*');
+
 
 Route::post('login',[AuthController::class,'login'])->name('login');
 Route::post('register',[AuthController::class,'register'])->name('register');
@@ -29,11 +33,13 @@ Route::get('passwordreset/{token}',[AuthController::class, 'passwordreset'])->na
 Route::post('passwordstore',[AuthController::class, 'passwordstore'])->name('password.store');
 
 
+Route::get('/v1/posts', [PostController::class, 'index']);
+Route::get('/v1/posts/{id}', [PostController::class, 'show']);
 Route::group(['prefix'=>'v1', 'middleware'=>'auth:sanctum'], function(){
 
 
 Route::get('/user', function (Request $request) { return $request->user(); });
-Route::apiResource('posts',PostController::class);
+Route::apiResource('posts', PostController::class)->except(['index', 'show']);
 Route::apiResource('users',UserController::class);
 Route::get('/posts/search/{searchword}',[PostController::class,'search']);
 Route::post('/posts/like/{id}',[PostController::class,'like']);
@@ -42,6 +48,9 @@ Route::post('logout',[AuthController::class,'logout'])->name('logout');
 
 });
 
+Route::get("/test-me", function () {
+    return 'Hello from Laravel!';
+});
 
 Route::fallback(function(){
     return response()->json([

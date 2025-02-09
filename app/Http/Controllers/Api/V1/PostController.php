@@ -58,7 +58,7 @@ class PostController extends Controller
      * security={ {"sanctum": {} }},
      *  *      @OA\RequestBody( required=true,
      *         @OA\MediaType(mediaType="multipart/form-data",
-     *             @OA\Schema( 
+     *             @OA\Schema(
      *                      @OA\Property( property="post", type="string",description="New post", ),
      *                      @OA\Property(property="image",type="file",description="image post", ),
      *                      required={"post"}))
@@ -100,7 +100,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::with('user')->findOrFail($id);
+        $post = Post::with('user')->withCount('likes')->findOrFail($id);
         return new PostResource($post);
     }
 
@@ -148,7 +148,7 @@ class PostController extends Controller
      * @OA\Response(response=404,description="Post Not Found"),
      * @OA\Response(response=403,description="Forbidden"),
      * @OA\Response(response=500,description="Server Error")
-     * 
+     *
      * )
      */
     public function destroy($id)
@@ -161,7 +161,7 @@ class PostController extends Controller
         ], Response::HTTP_NO_CONTENT);
     }
 
- 
+
     /**
      * @OA\Get(
      * path="/api/v1/posts/search/{searchword}",
@@ -208,18 +208,18 @@ class PostController extends Controller
                     'post_id' => $id,
                     'user_id' => auth()->id(),
                 ]);
-            
+
                 ProcessLikedPost::dispatch($post,Auth::user());
             } catch (Exception $e) {
-              
+
                return response()->json([
                 // 'message' => $e->getMessage(),
                 'message' => 'An error occurred while processing your request. Please try again later.',
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
-           
+
         }
-       
+
     }
 
     /**
@@ -242,7 +242,7 @@ class PostController extends Controller
      */
     public function comment(StoreCommentRequest $request ,$id)
     {
-        $post = Post::findOrFail($id);   
+        $post = Post::findOrFail($id);
         $comment = Comment::create($request->validated() + ['user_id' => auth()->id(),'post_id'=>$post->id ]);
 
         if ($comment) {
